@@ -37,12 +37,6 @@ type BackupInfo struct {
 	RememberAuth bool `json:"rememberAuth"`
 }
 
-type BackupClientInfo struct {
-	ClientID     string `json:"client_id"`
-	ClientSecret string `json:"client_secret"`
-	RedirectUri  string `json:"redirect_uri"`
-}
-
 type ForBuckets struct {
 	Type       string `json:"type" validate:"required"`
 	AccessKey  string `json:"accessKey"`

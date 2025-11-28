@@ -1,8 +1,6 @@
 package v2
 
 import (
-	"fmt"
-
 	"github.com/1Panel-dev/1Panel/core/app/api/v2/helper"
 	"github.com/1Panel-dev/1Panel/core/app/dto"
 	"github.com/gin-gonic/gin"
@@ -48,49 +46,6 @@ func (b *BaseApi) RefreshToken(c *gin.Context) {
 		return
 	}
 	helper.Success(c)
-}
-
-// @Tags Backup Account
-// @Summary List buckets
-// @Accept json
-// @Param request body dto.ForBuckets true "request"
-// @Success 200 {array} string
-// @Security ApiKeyAuth
-// @Security Timestamp
-// @Router /core/backups/buckets [post]
-func (b *BaseApi) ListBuckets(c *gin.Context) {
-	var req dto.ForBuckets
-	if err := helper.CheckBindAndValidate(&req, c); err != nil {
-		return
-	}
-
-	buckets, err := backupService.GetBuckets(req)
-	if err != nil {
-		helper.InternalServer(c, err)
-		return
-	}
-	helper.SuccessWithData(c, buckets)
-}
-
-// @Tags Backup Account
-// @Summary Load backup account base info
-// @Accept json
-// @Success 200 {object} dto.BackupClientInfo
-// @Security ApiKeyAuth
-// @Security Timestamp
-// @Router /core/backups/client/:clientType [get]
-func (b *BaseApi) LoadBackupClientInfo(c *gin.Context) {
-	clientType, ok := c.Params.Get("clientType")
-	if !ok {
-		helper.BadRequest(c, fmt.Errorf("error %s in path", "clientType"))
-		return
-	}
-	data, err := backupService.LoadBackupClientInfo(clientType)
-	if err != nil {
-		helper.InternalServer(c, err)
-		return
-	}
-	helper.SuccessWithData(c, data)
 }
 
 // @Tags Backup Account
